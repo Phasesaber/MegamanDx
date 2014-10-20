@@ -3,6 +3,7 @@ package megamanDx.entites;
 import java.awt.Rectangle;
 
 import megamanDx.main.GamePanel;
+import megamanDx.main.math.Vector2i;
 import megamanDx.tileMap.Tile;
 import megamanDx.tileMap.TileMap;
 
@@ -176,6 +177,10 @@ public abstract class Entity {
 	public void setPosition(double x, double y){
 		this.x = x;
 		this.y = y;
+	}
+	
+	public void setPosition(Vector2i v) {
+		setPosition(v.x,v.y);
 	}
 	
 	public void setVector(double dx, double dy){

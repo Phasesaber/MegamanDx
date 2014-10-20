@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import megamanDx.main.GamePanel;
+import megamanDx.main.math.Vector2i;
 
 
 public class TileMap {
@@ -125,6 +126,10 @@ public class TileMap {
 		
 		colOffset = (int) -this.x / tileSize;
 		rowOffset = (int) -this.y / tileSize;
+	}
+	
+	public void setPosition(Vector2i v){
+		setPosition(v.x, v.y);
 	}
 
 	private void fixBounds() {

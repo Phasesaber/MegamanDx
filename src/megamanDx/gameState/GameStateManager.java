@@ -5,10 +5,12 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import megamanDx.entites.player.character.Char;
 import megamanDx.gameState.states.HelpState;
-import megamanDx.gameState.states.Level1State;
 import megamanDx.gameState.states.MenuState;
+import megamanDx.gameState.states.levels.Level;
 import megamanDx.main.GamePanel;
+import megamanDx.main.math.Vector2i;
 
 
 public class GameStateManager {
@@ -24,7 +26,7 @@ public class GameStateManager {
 		gameStates = new ArrayList<GameState>();
 		currentState = MENU_STATE;
 		gameStates.add(new MenuState(this));
-		gameStates.add(new Level1State(this));
+		gameStates.add(new Level(1, Char.Megaman, new Vector2i(100,0), 30, "grasstileset", "grassbg1", "level1", this));
 		gameStates.add(new HelpState(this));
 	}
 	

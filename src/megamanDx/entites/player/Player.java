@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import megamanDx.entites.Animation;
 import megamanDx.entites.Entity;
 import megamanDx.entites.player.character.Char;
+import megamanDx.main.math.Vector2i;
 import megamanDx.tileMap.TileMap;
 
 
