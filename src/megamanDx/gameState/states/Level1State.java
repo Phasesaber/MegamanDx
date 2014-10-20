@@ -1,9 +1,9 @@
 package megamanDx.gameState.states;
 
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 
 import megamanDx.entites.player.Player;
+import megamanDx.entites.player.character.Char;
 import megamanDx.gameState.GameState;
 import megamanDx.gameState.GameStateManager;
 import megamanDx.main.GamePanel;
@@ -34,7 +34,7 @@ public class Level1State extends GameState {
 		
 		bg = new Background("/Background/grassbg1.png", 0.1);
 		
-		player = new Player(tileMap);
+		player = new Player(Char.Megaman, tileMap);
 		player.setPosition(100, 0);
 	}
 

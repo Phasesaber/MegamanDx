@@ -5,10 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import megamanDx.entites.Animation;
 import megamanDx.entites.Entity;
+import megamanDx.entites.player.character.Char;
 import megamanDx.tileMap.TileMap;
 
 
@@ -52,31 +51,30 @@ public class Player extends Entity {
 
 	private TileMap tileMap;
 	
-	public Player(TileMap tm) {
+	public Player(Char ch, TileMap tm) {
 		//TODO Insert Character Attributes
 		super(tm);
-		width = 30;
-		height = 30;
-		cwidth = 20;
-		cheight = 20;
-		moveSpeed = 0.3;
-		maxSpeed = 1.6;
-		stopSpeed = 0.4;
-		fallSpeed = 0.15;
-		maxFallSpeed  = 4.0;
-		jumpStart = -4.8;
-		stopJumpSpeed = 0.3;
+		width = ch.getWidth();
+		height = ch.getHeight();
+		cwidth = ch.getCwidth();
+		cheight = ch.getCheight();
+		moveSpeed = ch.getMoveSpeed();
+		maxSpeed = ch.getMaxSpeed();
+		stopSpeed = ch.getStopSpeed();
+		fallSpeed = ch.getFallSpeed();
+		maxFallSpeed  = ch.getMaxFallSpeed();
+		jumpStart = ch.getJumpStart();
+		stopJumpSpeed = ch.getStopJumpSpeed();
 		facingRight = true;
-		health = maxHealth = 5;
-		laserDamage = 5;
-		punchDamage = 3;
-		punchRange = 40;
-		canGlide = true;
+		health = maxHealth = ch.getHealth();
+		laserDamage = ch.getLaserDamage();
+		punchDamage = ch.getPunchDamage();
+		punchRange = ch.getPunchRange();
+		canGlide = ch.getCanGlide();
 		gliding = false;
 		tileMap = tm;
 		try{
-			BufferedImage spritesheet = ImageIO.read(getClass()
-					.getResourceAsStream("/Sprites/Player/playersprites.png"));
+			BufferedImage spritesheet = ch.getSpritesheet();
 			sprites = new ArrayList<BufferedImage[]>();
 			for(int i = 0; i < numFrames.length; i++){
 				BufferedImage[] bi = new BufferedImage[numFrames[i]];
