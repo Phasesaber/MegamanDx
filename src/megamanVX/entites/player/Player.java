@@ -48,6 +48,8 @@ public class Player extends Entity {
 	private static final int SHOOT = 5;
 	private static final int PUNCH = 6;
 	private static final int SHOOT_AND_RUN = 7;
+
+	private TileMap tileMap;
 	
 	public Player(TileMap tm) {
 		//TODO Insert Character Attributes
@@ -70,6 +72,7 @@ public class Player extends Entity {
 		punchRange = 40;
 		canGlide = true;
 		gliding = false;
+		tileMap = tm;
 		try{
 			BufferedImage spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/Sprites/Player/playersprites.png"));
@@ -138,7 +141,48 @@ public class Player extends Entity {
 				currentAction = PUNCH;
 				animation.setFrames(sprites.get(PUNCH));
 				animation.setDelay(400);
-				width = 30;
+				width = tileMap.getTileSize();
+			}
+		}else if (firing) {
+			if(left || right){
+				if (currentAction != SHOOT_AND_RUN) {
+					currentAction = SHOOT_AND_RUN;
+					animation.setFrames(
+							sprites.get(SHOOT_AND_RUN));
+					{
+						animation.setDelay(100);
+						width = tileMap.getTileSize();
+					}
+				}
+			}
+			else if (currentAction != SHOOT) {
+				currentAction = SHOOT;
+				animation.setFrames(sprites.get(SHOOT));
+				{
+					animation.setDelay(500);
+					width = tileMap.getTileSize();
+				}
+			}
+		}else if(dy > 0){
+			if(gliding){
+				if(currentAction != GLIDING){
+					currentAction = GLIDING;
+					animation.setFrames(sprites.get(GLIDING));
+					animation.setDelay(100);
+					width = tileMap.getTileSize();
+				}
+			}else if(currentAction != FALLING){
+				currentAction = FALLING;
+				animation.setFrames(sprites.get(FALLING));
+				animation.setDelay(-1);
+				width = tileMap.getTileSize();
+			}
+		}else if (dy < 0){
+			if(currentAction != JUMPING){
+				currentAction = JUMPING;
+				animation.setFrames(sprites.get(FALLING));
+				animation.setDelay(-1);
+				width = tileMap.getTileSize();
 			}
 		}else if(left || right){
 			if(firing){
@@ -148,7 +192,7 @@ public class Player extends Entity {
 							sprites.get(SHOOT_AND_RUN));
 					{
 						animation.setDelay(100);
-						width = 30;
+						width = tileMap.getTileSize();
 					}
 				}
 			} else {
@@ -156,47 +200,17 @@ public class Player extends Entity {
 					currentAction = WALKING;
 					animation.setFrames(sprites.get(WALKING));
 					{
-						animation.setDelay(100);
-						width = 30;
+						animation.setDelay(120);
+						width = tileMap.getTileSize();
 					}
 				}
-			}
-		} else if (firing) {
-			if (currentAction != SHOOT) {
-				currentAction = SHOOT;
-				animation.setFrames(sprites.get(SHOOT));
-				{
-					animation.setDelay(500);
-					width = 30;
-				}
-			}
-		}else if(dy > 0){
-			if(gliding){
-				if(currentAction != GLIDING){
-					currentAction = GLIDING;
-					animation.setFrames(sprites.get(GLIDING));
-					animation.setDelay(100);
-					width = 30;
-				}
-			}else if(currentAction != FALLING){
-				currentAction = FALLING;
-				animation.setFrames(sprites.get(FALLING));
-				animation.setDelay(100);
-				width = 30;
-			}
-		}else if (dy < 0){
-			if(currentAction != JUMPING){
-				currentAction = JUMPING;
-				animation.setFrames(sprites.get(FALLING));
-				animation.setDelay(-1);
-				width = 30;
 			}
 		}else{
 			if(currentAction != IDLE){
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(400);
-				width = 30;
+				width = tileMap.getTileSize();
 			}
 		}
 		animation.update();

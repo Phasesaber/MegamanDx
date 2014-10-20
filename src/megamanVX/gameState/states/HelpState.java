@@ -3,9 +3,11 @@ package megamanVX.gameState.states;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 import megamanVX.gameState.GameState;
 import megamanVX.gameState.GameStateManager;
+import megamanVX.main.GamePanel;
 import megamanVX.tileMap.Background;
 
 public class HelpState extends GameState {
@@ -48,22 +50,21 @@ public class HelpState extends GameState {
 		bg.draw(g);
 		g.setColor(titleColor);
 		g.setFont(titleFont);
-		//TODO Center Text
-		gsm.drawCenteredString("Help", g);
+		gsm.drawCenteredString("Help", 14, g);
 		g.setFont(font);
-		for(int i = 0; i < options.length; i++){
-			if(i == currentChoice)
-				g.setColor(Color.RED);
-			else g.setColor(Color.BLACK);
-			g.drawString(options[i], 145, 140 + i * 15);
-		}
+		gsm.drawCenteredString("Press Any Key to go Back", GamePanel.HEIGHT - 30, g);
+		g.setColor(Color.CYAN);
+		g.drawString("This is a Megaman tribute game. It is a fully working 2D", 8, 26);
+		g.drawString("engine that can be used for other games. I will be", 8, 26 + 12);
+		g.drawString("improving it to be just like the original Megaman Games.", 8, 26 + 12 + 12);
 	}
 
 	public void keyPressed(int k) {}
 
 	@Override
 	public void keyReleased(int k) {
-		gsm.setState(GameStateManager.MENU_STATE);
+		if (k != KeyEvent.VK_ENTER)
+			gsm.setState(GameStateManager.MENU_STATE);
 	}
 
 }

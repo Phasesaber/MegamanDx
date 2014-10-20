@@ -56,7 +56,7 @@ public class MenuState extends GameState {
 		g.setColor(titleColor);
 		g.setFont(titleFont);
 		//TODO Center Text
-		g.drawString("MegamanDX", 70, 70);
+		gsm.drawCenteredString("MegamanDX", 70, g);
 		g.setFont(font);
 		for(int i = 0; i < options.length; i++){
 			if(i == currentChoice)
@@ -70,7 +70,7 @@ public class MenuState extends GameState {
 	private void select(){
 		switch(currentChoice){
 		case 0: gsm.setState(GameStateManager.LEVEL1_STATE); break;//Start
-		case 1: gsm.setState(GameStateManager.HELP_STATE);//Help 
+		case 1: gsm.setState(GameStateManager.HELP_STATE); break;//Help 
 		case 2: System.exit(0); //Quit
 		}
 	}
