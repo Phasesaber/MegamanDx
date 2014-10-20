@@ -1,6 +1,7 @@
 package megamanDx.entites.player;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -137,6 +138,7 @@ public class Player extends Entity {
 		
 		//Animations
 		if(punching){
+			if(gliding) punching = false;
 			if(currentAction != PUNCH){
 				currentAction = PUNCH;
 				animation.setFrames(sprites.get(PUNCH));
@@ -144,6 +146,7 @@ public class Player extends Entity {
 				width = tileMap.getTileSize();
 			}
 		}else if (firing) {
+			if(gliding) firing = false;
 			if(left || right){
 				if (currentAction != SHOOT_AND_RUN) {
 					currentAction = SHOOT_AND_RUN;
@@ -159,7 +162,7 @@ public class Player extends Entity {
 				currentAction = SHOOT;
 				animation.setFrames(sprites.get(SHOOT));
 				{
-					animation.setDelay(500);
+					animation.setDelay(-1);
 					width = tileMap.getTileSize();
 				}
 			}
@@ -273,6 +276,27 @@ public class Player extends Entity {
 			if(dy > maxFallSpeed)
 				dy = maxFallSpeed;
 		}
+	}
+	
+	public void keyPressed(int k) {
+		if(k == KeyEvent.VK_LEFT || k == KeyEvent.VK_A)setLeft(true);
+		if(k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_D)setRight(true);
+		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W)setUp(true);
+		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S)setDown(true);
+		if(k == KeyEvent.VK_SPACE)setJumping(true);
+		if(k == KeyEvent.VK_E)setGliding(true);
+		if(k == KeyEvent.VK_R)setPunching();
+		if(k == KeyEvent.VK_F)setFiring();
+	}
+
+	public void keyReleased(int k) {
+		if(k == KeyEvent.VK_LEFT || k == KeyEvent.VK_A)setLeft(false);
+		if(k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_D)setRight(false);
+		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W)setUp(false);
+		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S)setDown(false);
+		if(k == KeyEvent.VK_SPACE)setJumping(false);
+		if(k == KeyEvent.VK_E)setGliding(false);
+		if(k == KeyEvent.VK_F) firing = false;
 	}
 	
 }

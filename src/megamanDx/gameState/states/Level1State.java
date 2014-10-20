@@ -58,24 +58,13 @@ public class Level1State extends GameState {
 
 	@Override
 	public void keyPressed(int k) {
-		if(k == KeyEvent.VK_LEFT || k == KeyEvent.VK_A)player.setLeft(true);
-		if(k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_D)player.setRight(true);
-		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W)player.setUp(true);
-		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S)player.setDown(true);
-		if(k == KeyEvent.VK_SPACE)player.setJumping(true);
-		if(k == KeyEvent.VK_E)player.setGliding(true);
-		if(k == KeyEvent.VK_R)player.setPunching();
-		if(k == KeyEvent.VK_F)player.setFiring();
+		player.keyPressed(k);
 	}
 
 	@Override
 	public void keyReleased(int k) {
-		if(k == KeyEvent.VK_LEFT || k == KeyEvent.VK_A)player.setLeft(false);
-		if(k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_D)player.setRight(false);
-		if(k == KeyEvent.VK_UP || k == KeyEvent.VK_W)player.setUp(false);
-		if(k == KeyEvent.VK_DOWN || k == KeyEvent.VK_S)player.setDown(false);
-		if(k == KeyEvent.VK_SPACE)player.setJumping(false);
-		if(k == KeyEvent.VK_E)player.setGliding(false);
+		player.keyReleased(k);
 	}
+
 
 }
