@@ -24,7 +24,7 @@ public class HelpState extends GameState {
 		
 		try{
 			bg = new Background("/Background/menubg.png", 1);
-			bg.setVector(-0.1, 0);
+			bg.setVector(0.28, 0);
 			
 			titleColor = new Color(128,0,0);
 			titleFont = new Font("Century Gothic", Font.PLAIN, 16);
@@ -65,6 +65,11 @@ public class HelpState extends GameState {
 	public void keyReleased(int k) {
 		if (k != KeyEvent.VK_ENTER)
 			gsm.setState(GameStateManager.MENU_STATE);
+	}
+
+	@Override
+	public boolean isPaused() {
+		return false;
 	}
 
 }

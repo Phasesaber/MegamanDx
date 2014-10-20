@@ -1,6 +1,7 @@
 package megamanDx.gameState.states.levels;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import megamanDx.entites.player.Player;
@@ -25,6 +26,8 @@ public class Level extends GameState{
 	private String background;
 	private String mapFile;
 	
+	private boolean paused;
+	
 	private static ArrayList<Level> levels = new ArrayList<Level>();
 	
 	public Level(int level, Char ch, Vector2i startPosition, int tileSize,
@@ -38,6 +41,7 @@ public class Level extends GameState{
 		this.tileSet = tileSet;
 		this.background = background;
 		this.mapFile = mapFile;
+		this.paused = false;
 		init();
 	}
 
@@ -57,6 +61,7 @@ public class Level extends GameState{
 
 	@Override
 	public void update() {
+		if(paused) return;
 		player.update();
 		tileMap.setPosition(GamePanel.WIDTH/2 - player.getX(), GamePanel.HEIGHT/2 - player.getY());
 	}
@@ -71,16 +76,32 @@ public class Level extends GameState{
 		
 		//Draw Player
 		player.draw(g);
+		if(paused){
+			//TODO Pause Screen
+		}
 	}
 
 	@Override
 	public void keyPressed(int k) {
-		player.keyPressed(k);
+		if(k == KeyEvent.VK_ESCAPE){
+			if(paused)
+				paused = false;
+			else
+				paused = true;
+		}
+		if(!paused)
+			player.keyPressed(k);
 	}
 
 	@Override
 	public void keyReleased(int k) {
-		player.keyReleased(k);
+		if(!paused)
+			player.keyReleased(k);
+	}
+
+	@Override
+	public boolean isPaused() {
+		return paused;
 	}
 
 	

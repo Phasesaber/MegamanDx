@@ -102,4 +102,9 @@ public class MenuState extends GameState {
 		
 	}
 
+	@Override
+	public boolean isPaused() {
+		return false;
+	}
+
 }

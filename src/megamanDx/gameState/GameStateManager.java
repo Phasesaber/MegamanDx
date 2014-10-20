@@ -36,7 +36,8 @@ public class GameStateManager {
 	}
 	
 	public void update(){
-		gameStates.get(currentState).update();
+		if(!gameStates.get(currentState).isPaused())
+			gameStates.get(currentState).update();
 	}
 	
 	public void draw(Graphics2D g){
