@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import megamanDx.tileMap.TileMap;
-
 public class Char {
 	
 	private String name; //Megaman
@@ -30,6 +28,7 @@ public class Char {
 	private int punchRange;
 	private boolean canGlide;
 	private boolean gliding;
+	private int[] frames;
 	
 	private BufferedImage spritesheet;
 	
@@ -37,7 +36,7 @@ public class Char {
 			int cwidth, int cheight, double moveSpeed, double maxSpeed,
 			double stopSpeed, double fallSpeed, double maxFallSpeed, double jumpStart,
 			double stopJumpSpeed, boolean facingRight, int health,
-			int laserDamage, int punchDamage, int punchRange, boolean canGlide) {
+			int laserDamage, int punchDamage, int punchRange, boolean canGlide, int[] frames) {
 		super();
 		this.name = name;
 		this.desc = desc;
@@ -59,13 +58,14 @@ public class Char {
 		this.punchRange = punchRange;
 		this.canGlide = canGlide;
 		this.gliding = false;
+		this.frames = frames;
 		try {
 			spritesheet = ImageIO.read(getClass()
 					.getResourceAsStream("/Sprites/Character/" + name.toLowerCase() + ".png"));
 		} catch(IOException e){e.printStackTrace();}
 	}
 	
-	public static final Char Megaman = new Char("Megaman", "Blue Bomber", 30, 30, 20, 20, 0.3, 1.6, 0.4, 0.15, 4.0, -4.8, 0.3, true, 5, 5, 3, 40, true);
+	public static final Char Megaman = new Char("Megaman", "Blue Bomber", 30, 30, 20, 20, 0.3, 1.6, 1.0, 0.15, 4.0, -4.8, 0.3, true, 5, 5, 3, 40, true, new int[]{2,3,1,1,3,1,2,3,1});
 	
 	public String getName() {
 		return name;
@@ -241,6 +241,10 @@ public class Char {
 
 	public void setSpritesheet(BufferedImage spritesheet) {
 		this.spritesheet = spritesheet;
+	}
+
+	public int[] getFrames() {
+		return frames;
 	}
 	
 }

@@ -29,16 +29,7 @@ public class Player extends Entity {
 	private boolean canGlide, gliding;
 	
 	private ArrayList<BufferedImage[]> sprites;
-	private final int[] numFrames = {
-		2,//IDLE
-		3,//WALKING
-		1,//JUMPING
-		1,//FALLING
-		3,//GLIDING
-		1,//SHOOT
-		2,//PUNCH
-		3 //SHOOT AND RUN
-	};
+	private final int[] numFrames;
 	
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -48,6 +39,7 @@ public class Player extends Entity {
 	private static final int SHOOT = 5;
 	private static final int PUNCH = 6;
 	private static final int SHOOT_AND_RUN = 7;
+	private static final int SHOOT_AND_JUMP = 8;
 
 	private TileMap tileMap;
 	
@@ -71,6 +63,7 @@ public class Player extends Entity {
 		punchDamage = ch.getPunchDamage();
 		punchRange = ch.getPunchRange();
 		canGlide = ch.getCanGlide();
+		numFrames = ch.getFrames();
 		gliding = false;
 		tileMap = tm;
 		try{
@@ -134,6 +127,13 @@ public class Player extends Entity {
 			if(animation.hasPlayedOnce()) firing = false;
 		}
 		
+		//Debug
+		System.out.println("Left||Right: " + (left||right));
+		System.out.println("Firing: " + firing);
+		System.out.println("Jumping||Falling: " + (jumping||falling));
+		System.out.println("CurrentAction: " + currentAction);
+		System.out.println("");
+		
 		//Animations
 		if(punching){
 			if(gliding) punching = false;
@@ -143,29 +143,45 @@ public class Player extends Entity {
 				animation.setDelay(400);
 				width = tileMap.getTileSize();
 			}
-		}else if (firing) {
-			if(gliding) firing = false;
-			if(left || right){
-				if (currentAction != SHOOT_AND_RUN) {
-					currentAction = SHOOT_AND_RUN;
-					animation.setFrames(
-							sprites.get(SHOOT_AND_RUN));
+		} else if (firing) {
+			if (gliding)
+				firing = false;
+			else {
+				if (((jumping || falling) && (left || right))
+						&& currentAction != SHOOT_AND_JUMP) {
+					currentAction = SHOOT_AND_JUMP;
+					animation.setFrames(sprites.get(SHOOT_AND_JUMP));
 					{
-						animation.setDelay(100);
+						animation.setDelay(-1);
+						width = tileMap.getTileSize();
+					}
+				} else if ((left || right) && !jumping && !falling) {
+					if (currentAction != SHOOT_AND_RUN) {
+						currentAction = SHOOT_AND_RUN;
+						animation.setFrames(sprites.get(SHOOT_AND_RUN));
+						{
+							animation.setDelay(100);
+							width = tileMap.getTileSize();
+						}
+					}
+				} else if (!falling && !jumping && currentAction != SHOOT) {
+					currentAction = SHOOT;
+					animation.setFrames(sprites.get(SHOOT));
+					{
+						animation.setDelay(-1);
 						width = tileMap.getTileSize();
 					}
 				}
 			}
-			else if (currentAction != SHOOT) {
-				currentAction = SHOOT;
-				animation.setFrames(sprites.get(SHOOT));
-				{
-					animation.setDelay(-1);
+		}else if(dy > 0){
+			if(firing){
+				if(currentAction != SHOOT_AND_JUMP){
+					currentAction = SHOOT_AND_JUMP;
+					animation.setFrames(sprites.get(SHOOT_AND_JUMP));
 					width = tileMap.getTileSize();
 				}
 			}
-		}else if(dy > 0){
-			if(gliding){
+			else if(gliding){
 				if(currentAction != GLIDING){
 					currentAction = GLIDING;
 					animation.setFrames(sprites.get(GLIDING));
@@ -178,21 +194,20 @@ public class Player extends Entity {
 				animation.setDelay(-1);
 				width = tileMap.getTileSize();
 			}
-		}else if (dy < 0){
-			if(currentAction != JUMPING){
+		} else if (dy < 0) {
+			if (currentAction != JUMPING) {
 				currentAction = JUMPING;
 				animation.setFrames(sprites.get(FALLING));
 				animation.setDelay(-1);
 				width = tileMap.getTileSize();
 			}
-		}else if(left || right){
-			if(firing){
+		} else if (left || right) {
+			if (firing && !jumping && !falling) {
 				if (currentAction != SHOOT_AND_RUN) {
 					currentAction = SHOOT_AND_RUN;
-					animation.setFrames(
-							sprites.get(SHOOT_AND_RUN));
+					animation.setFrames(sprites.get(SHOOT_AND_RUN));
 					{
-						animation.setDelay(100);
+						animation.setDelay(120);
 						width = tileMap.getTileSize();
 					}
 				}

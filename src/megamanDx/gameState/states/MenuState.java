@@ -13,6 +13,7 @@ import megamanDx.tileMap.Background;
 public class MenuState extends GameState {
 
 	private Background bg;
+	private Background bg2;
 	
 	private int currentChoice = 0;
 	private String[] options = {"Start", "Help", "Quit"};
@@ -28,7 +29,9 @@ public class MenuState extends GameState {
 		
 		try{
 			bg = new Background("/Background/menubg.png", 1);
-			bg.setVector(-0.1, 0);
+			bg.setVector(0.28, 0);
+			
+			bg2 = new Background("/Background/menuTower.png", 1);
 			
 			titleColor = new Color(128,0,0);
 			titleFont = new Font("Century Gothic", Font.PLAIN, 28);
@@ -53,6 +56,7 @@ public class MenuState extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 		bg.draw(g);
+		bg2.draw(g);
 		g.setColor(titleColor);
 		g.setFont(titleFont);
 		//TODO Center Text
