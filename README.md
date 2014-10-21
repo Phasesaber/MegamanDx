@@ -1,22 +1,20 @@
 MegamanDx
 =========
 
-A Megaman tribute game.
-
-This is a Megaman game based on the original series. 
+A Megaman tribute game using a 2d Game Engine that I will be using for other games, and I may make it a working framework.
 
 Buttons
-=========
-W,UP        Move Up
+-------
+W,UP   |     Move Up
 
-S, DOWN     Move Down
+S, DOWN  |   Move Down
 
-A, LEFT     Move Left
+A, LEFT   |  Move Left
 
-D, RIGHT    Move Right
+D, RIGHT   | Move Right
 
-Space       Jump
+Space    |   Jump
 
-R           Punch?
+R         |  Punch?
 
-F           Fire!
+F          | Fire!
